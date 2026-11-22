@@ -98,9 +98,10 @@ if file is not None:
     else:
         st.markdown(
             f'<div class="card warn"><h3>Not sure about this one</h3>'
-            f'<div class="small">Best guess: {crop}, {cond} ({conf:.0%} confident). '
-            f'Please do not rely on it. Consult a local agriculture expert or your '
-            f'nearest Krishi Vigyan Kendra.</div></div>',
+            f'<div class="small">This photo does not clearly match a supported crop leaf, '
+            f'or the leaf is hard to read. Try a closer, well-lit photo of a single leaf. '
+            f'If the problem continues, consult a local agriculture expert or your nearest '
+            f'Krishi Vigyan Kendra.</div></div>',
             unsafe_allow_html=True)
 
     st.progress(conf, text=f'Confidence: {conf:.0%}')
