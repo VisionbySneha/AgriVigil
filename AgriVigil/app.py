@@ -1,21 +1,28 @@
 import json
+from pathlib import Path
+
 import numpy as np
 import streamlit as st
 import tensorflow as tf
 from PIL import Image
 
+HERE = Path(__file__).parent
 THRESHOLD = 0.90  # chosen from validation analysis
+
 
 @st.cache_resource
 def load():
-    model = tf.keras.models.load_model('agrivigil_mobilenetv2.keras')
-    names = json.load(open('class_names.json'))
+    model = tf.keras.models.load_model(HERE / 'agrivigil_mobilenetv2.keras')
+    names = json.load(open(HERE / 'class_names.json'))
     return model, names
+
 
 model, class_names = load()
 
+
 def nice(name):
     return name.replace('___', ' - ').replace('_', ' ')
+
 
 st.title('AgriVigil')
 st.write('AI plant disease detection with confidence-based expert review.')
@@ -24,7 +31,7 @@ file = st.file_uploader('Upload a plant leaf photo', type=['jpg', 'jpeg', 'png']
 
 if file is not None:
     img = Image.open(file).convert('RGB')
-    st.image(img, use_container_width=True)
+    st.image(img, width=320)
 
     x = tf.image.resize(np.array(img), (224, 224))
     x = tf.keras.applications.mobilenet_v2.preprocess_input(x)
@@ -42,4 +49,3 @@ if file is not None:
     st.subheader('Top 3 possibilities')
     for i in top3:
         st.write(f'{nice(class_names[i])}: {probs[i]:.0%}')
-        
