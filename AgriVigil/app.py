@@ -97,15 +97,16 @@ if file is not None:
             unsafe_allow_html=True)
     else:
         st.markdown(
-            f'<div class="card warn"><h3>Not sure about this one</h3>'
-            f'<div class="small">This photo does not clearly match a supported crop leaf, '
-            f'or the leaf is hard to read. Try a closer, well-lit photo of a single leaf. '
-            f'If the problem continues, consult a local agriculture expert or your nearest '
-            f'Krishi Vigyan Kendra.</div></div>',
+            '<div class="card warn"><h3>Not sure about this one</h3>'
+            '<div class="small">This photo does not clearly match a supported crop leaf, '
+            'or the leaf is hard to read. Try a closer, well-lit photo of a single leaf. '
+            'If the problem continues, consult a local agriculture expert or your nearest '
+            'Krishi Vigyan Kendra.</div></div>',
             unsafe_allow_html=True)
 
     st.progress(conf, text=f'Confidence: {conf:.0%}')
-with st.expander('Closest matches (for reference only)'):
+
+    with st.expander('Closest matches (for reference only)'):
         for i in top3:
             c, d = split_label(class_names[i])
             st.progress(float(probs[i]), text=f'{c}: {d} ({probs[i]:.0%})')
