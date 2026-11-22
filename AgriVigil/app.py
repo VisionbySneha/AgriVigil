@@ -106,7 +106,7 @@ if file is not None:
 
     st.progress(conf, text=f'Confidence: {conf:.0%}')
 
-    with st.expander('See the top 3 possibilities'):
+        with st.expander('Closest matches (for reference only)'):
         for i in top3:
             c, d = split_label(class_names[i])
             st.progress(float(probs[i]), text=f'{c}: {d} ({probs[i]:.0%})')
